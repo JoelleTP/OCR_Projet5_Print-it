@@ -16,3 +16,16 @@ const slides = [
 		"tagLine":"Autocollants <span>avec découpe laser sur mesure</span>"
 	}
 ]
+
+/***Ajout d'un event listener flèche droite et gauche***/
+const rightarrow = document.querySelector(".arrow_right");
+const leftarrow = document.querySelector(".arrow_left");
+
+rightarrow.addEventListener("click", () => {
+	console.log("J'ai cliqué sur la flèche droite");
+})
+
+leftarrow.addEventListener("click", () => {
+	console.log("J'ai cliqué sur la flèche gauche");
+})
+
