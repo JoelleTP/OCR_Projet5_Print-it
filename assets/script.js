@@ -18,15 +18,11 @@ const slides = [
 	}
 ]
 
-const rightarrow = document.querySelector(".arrow_right");
-const leftarrow = document.querySelector(".arrow_left");
-let slidesimage = document.querySelector(".banner-img");
-let slidestext = document.querySelector ("#banner p");
 let slidesnumber = slides.length;
 let slidesposition = 0; 
 
-/***Fonction***/
-/*Fonction : définition nombre de points en fonction du slides*/
+/***Déclaration des fonctions utilisées***/
+/*Définition nombre de bullet points en fonction du slides*/
 function createDots() {
 	let newdot;
 	const dots = document.querySelector(".dots");
@@ -50,24 +46,47 @@ function updateDots() {
 	}
 }
 
-/***Initialisation du slider***/
+/*Mise en place du défilement infini des slides*/
+function checkslidesposition() {
+	if (slidesposition >= slidesnumber) {
+		slidesposition = 0;
+	}
+	else if (slidesposition < 0) {
+		slidesposition = slidesnumber - 1;
+	}
+}
+
+/*Mise à jour de l'image et du texte des slides en fonction de la position*/
+function slidesupdate() {
+	let slidesimage = document.querySelector(".banner-img");
+	let slidestext = document.querySelector ("#banner p");
+	slidesimage.setAttribute("src", `./assets/images/slideshow/${slides[slidesposition].image}`);
+	slidestext.innerHTML = slides[slidesposition].tagLine;
+}
+
+/*Function définissant ce qui se passe lors d'un click*/
+function click() {
+	checkslidesposition();
+	slidesupdate();
+	updateDots();
+}
+
+/***Initialisation de la page : création des quatres bullet points et affichage du bullet point de la slide 1***/
 createDots();
 updateDots();
 
 
 /***Changement de slides lorsque l'on clique sur la flèche droite ou la flèche gauche***/
+const rightarrow = document.querySelector(".arrow_right");
 rightarrow.addEventListener("click", () => {
 	slidesposition++;
-	slidesimage.setAttribute("src", `./assets/images/slideshow/${slides[slidesposition].image}`);
-	slidestext.innerHTML = slides[slidesposition].tagLine;
-	updateDots();
+	click();
 })
 
+const leftarrow = document.querySelector(".arrow_left");
 leftarrow.addEventListener("click", () => {
 	slidesposition--;
-	slidesimage.setAttribute("src", `./assets/images/slideshow/${slides[slidesposition].image}`);
-	slidestext.innerHTML = slides[slidesposition].tagLine;
-	updateDots();
+	click();
 })
 
 
