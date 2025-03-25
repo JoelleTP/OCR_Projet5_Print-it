@@ -1,3 +1,4 @@
+/***Définition des variables***/
 const slides = [
 	{
 		"image":"slide1.jpg",
@@ -17,38 +18,57 @@ const slides = [
 	}
 ]
 
-/***Ajout d'un event listener flèche droite et gauche***/
 const rightarrow = document.querySelector(".arrow_right");
 const leftarrow = document.querySelector(".arrow_left");
+let slidesimage = document.querySelector(".banner-img");
+let slidestext = document.querySelector ("#banner p");
+let slidesnumber = slides.length;
+let slidesposition = 0; 
 
+/***Fonction***/
+/*Fonction : définition nombre de points en fonction du slides*/
+function createDots() {
+	let newdot;
+	const dots = document.querySelector(".dots");
+	for (let i = 0; i < slidesnumber; i++) {
+		newdot = document.createElement("div");
+		dots.appendChild(newdot);
+		newdot.classList.add("dot");
+	}
+}
+
+/*Fonction : modification du bulletpoint de la slide affichée*/
+function updateDots() {
+	const alldots = document.querySelectorAll(".dot");
+	for (let i = 0; i < alldots.length; i++) {
+		if (i === slidesposition) {
+			alldots[i].classList.add("dot_selected");
+		}
+		else {
+			alldots[i].classList.remove("dot_selected");
+		}
+	}
+}
+
+/***Initialisation du slider***/
+createDots();
+updateDots();
+
+
+/***Changement de slides lorsque l'on clique sur la flèche droite ou la flèche gauche***/
 rightarrow.addEventListener("click", () => {
-	console.log("J'ai cliqué sur la flèche droite");
+	slidesposition++;
+	slidesimage.setAttribute("src", `./assets/images/slideshow/${slides[slidesposition].image}`);
+	slidestext.innerHTML = slides[slidesposition].tagLine;
+	updateDots();
 })
 
 leftarrow.addEventListener("click", () => {
-	console.log("J'ai cliqué sur la flèche gauche");
+	slidesposition--;
+	slidesimage.setAttribute("src", `./assets/images/slideshow/${slides[slidesposition].image}`);
+	slidestext.innerHTML = slides[slidesposition].tagLine;
+	updateDots();
 })
 
-/***Définition nombre de points en fonction du slides***/
-let slidesnumber = slides.length;
-let newdot;
-const dots = document.querySelector(".dots");
 
-for (let i = 0; i < slidesnumber; i++) {
-	newdot = document.createElement("div");
-	dots.appendChild(newdot);
-	newdot.classList.add("dot");
-}
 
-/***Modification du bulletpoint de la slide affichée***/
-const alldots = document.querySelectorAll(".dot");
-let slidesposition = 0; 
-
-for (let i = 0; i < alldots.length; i++) {
-	if (i === slidesposition) {
-		alldots[i].classList.add("dot_selected");
-	}
-	else {
-		alldots[i].classList.remove("dot_selected");
-	}
-}
